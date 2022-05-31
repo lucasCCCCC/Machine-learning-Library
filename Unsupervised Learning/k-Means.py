@@ -78,11 +78,11 @@ class Kmeans:
         return y
 
 
-x = np.array([[0.9, 1], [2, 1], [2.5, 2], [1.2, 2], [5, 3.5], [5, 5.4], [4, 3.9],
+test_data = np.array([[0.9, 1], [2, 1], [2.5, 2], [1.2, 2], [5, 3.5], [5, 5.4], [4, 3.9],
                       [5.5, 4], [5.1, 4.6], [4.1, 3.6], [4.6, 3.9],
                       [8, 7], [5.5, 6], [8, 6.5], [7.5, 7.9], [7.5, 6.8]])
 
 K = 3
 
-kmeans = Kmeans(x, K)
-kmeans.fitClusters(x)
+kmeans = Kmeans(test_data, K)
+kmeans.fitClusters(test_data)
