@@ -3,10 +3,12 @@ import numpy as np
 
 class LinearRegression:
 
-    def __init__(self, w0, w1, learningRate):
+    def __init__(self, w0, w1, learningRate, iterations, data):
         self.w0 = w0
         self.w1 = w1
         self.learningRate = learningRate
+        self.iterations = iterations
+        self.data = data
 
     def meanSquareError(self, X, Y):
         return (1 / len(X)) * sum([val ** 2 for val in (self.w1 * X + self.w0 - Y)])
@@ -23,22 +25,16 @@ class LinearRegression:
         self.w0 = self.w0 - self.learningRate * w0_pd
         self.w1 = self.w1 - self.learningRate * w1_pd
 
+    def fit(self):
+        for i in range(self.iterations):
+            self.train(self.data[:, :1], self.data[:, 1:])
 
-test_data = np.array([[1, 1], [2, 2], [3, 4], [4, 4], [5, 5], [5, 6], [6, 5], [7, 7], [7, 6], [8, 8], [9, 7], [10, 11]])
+    def getParams(self):
+        print("Iteration: ", self.iterations,
+              "\nValue of w0: ", self.getWeights()[0],
+              "\nValue of w1:", self.getWeights()[1],
+              "\nLoss:", self.meanSquareError(self.data[:, :1], self.data[:, 1:]), "\n")
 
-x_train_data = test_data[:, :1]
-y_train_data = test_data[:, 1:]
-
-initialW0 = 0
-initialW1 = 0
-initialLearningRate = 0.01
-iterations = 100
-
-model = LinearRegression(initialW0, initialW1, initialLearningRate)
-
-for i in range(iterations):
-    model.train(x_train_data, y_train_data)
-    print("Iteration: ", i+1,
-          "\nValue of w0: ", model.getWeights()[0],
-          "\nValue of w1:", model.getWeights()[1],
-          "\nCurrent loss:", model.meanSquareError(x_train_data, y_train_data), "\n")
+    def predict(self, x):
+        yPrediction = x * self.getWeights()[1] + self.getWeights()[0]
+        return yPrediction

@@ -23,7 +23,7 @@ class Dbscan:
 
         return neighbours
 
-    def cluster(self):
+    def fit(self):
         neighboursQueue = queue.Queue()
 
         self.test_data = np.append(self.test_data, np.array([[-1] * len(test_data)]).reshape(-1, 1), axis=1)
@@ -67,7 +67,7 @@ class Dbscan:
                             neighboursQueue.put(i)
                             foundNeighbours.append(i)
 
-    def printClusters(self):
+    def getParams(self):
 
         clusters = {}
 
@@ -80,16 +80,3 @@ class Dbscan:
             print("Points in cluster ", cluster, ":")
             point = str(point).replace("[", "").replace("]", "").replace("'", "")
             print(point)
-
-
-test_data = np.array([[0.9, 1], [2, 1], [2.5, 2], [1.2, 2], [5, 3.5], [5, 5.4], [4, 3.9],
-                      [5.5, 4], [5.1, 4.6], [4.1, 3.6], [4.6, 3.9],
-                      [8, 7], [5.5, 6], [8, 6.5], [7.5, 7.9], [7.5, 6.8]])
-
-
-epsilon = 2
-minPoints = 2
-
-dbscan = Dbscan(epsilon, minPoints, test_data)
-dbscan.cluster()
-dbscan.printClusters()

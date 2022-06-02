@@ -44,8 +44,8 @@ class Kmeans:
 
         return y
 
-    def printClusters(self, x, y):
-        print("Number of clusters specified: ", self.K, "\n")
+    def getParams(self, x, y):
+        print("Number of clusters specified: ", self.K)
 
         clusters = {}
 
@@ -57,10 +57,10 @@ class Kmeans:
         for cluster, point in clusters.items():
             print("Points in cluster ", cluster, ":")
             point = str(point).replace("[", "").replace("]", "").replace("'", "")
-            print(point, "\n")
+            print(point)
 
 
-    def fitClusters(self, x):
+    def fit(self, x):
         centroids = self.setCentroid(x)
 
         for i in range(self.maxIteration):
@@ -73,16 +73,6 @@ class Kmeans:
         y = self.predict(clusters)
 
 
-        self.printClusters(x, y)
+        self.getParams(x, y)
 
         return y
-
-
-test_data = np.array([[0.9, 1], [2, 1], [2.5, 2], [1.2, 2], [5, 3.5], [5, 5.4], [4, 3.9],
-                      [5.5, 4], [5.1, 4.6], [4.1, 3.6], [4.6, 3.9],
-                      [8, 7], [5.5, 6], [8, 6.5], [7.5, 7.9], [7.5, 6.8]])
-
-K = 3
-
-kmeans = Kmeans(test_data, K)
-kmeans.fitClusters(test_data)

@@ -4,10 +4,12 @@ from scipy.special import expit
 
 class LogisticRegression:
 
-    def __init__(self, w0, w1, learningRate):
+    def __init__(self, w0, w1, learningRate, iterations, data):
         self.w0 = w0
         self.w1 = w1
         self.learningRate = learningRate
+        self.iterations = iterations
+        self.data = data
 
     def getWeights(self):
         return self.w0, self.w1
@@ -28,23 +30,20 @@ class LogisticRegression:
         self.w0 = self.w0 - self.learningRate * w0_pd
         self.w1 = self.w1 - self.learningRate * w1_pd
 
+    def fit(self):
+        for i in range(self.iterations):
+            self.train(self.data[:, :1], self.data[:, 1:])
 
-test_data = np.array([[1, 0], [1.5, 0], [2, 0], [2.5, 0], [3, 0], [4, 0], [4.5, 0],
-                      [5.5, 0], [6, 1], [7, 1], [7.5, 1], [8, 1], [8.5, 1], [9, 1]])
+    def getParams(self):
+        print("Iteration: ", self.iterations,
+              "\nValue of w0: ", self.getWeights()[0],
+              "\nValue of w1:", self.getWeights()[1],
+              "\nLoss:", self.crossEntropyLoss(self.data[:, :1], self.data[:, 1:]))
 
-x_train_data = test_data[:, :1]
-y_train_data = test_data[:, 1:]
+    def predict(self, x):
+        yPrediction = expit(x * self.getWeights()[1] + self.getWeights()[0])
 
-initialW0 = 0
-initialW1 = 0
-initialLearningRate = 0.01
-iterations = 100
+        if yPrediction > 0.5:
+            return 1
 
-model = LogisticRegression(initialW0, initialW1, initialLearningRate)
-
-for i in range(iterations):
-    model.train(x_train_data, y_train_data)
-    print("Iteration: ", i+1,
-          "\nValue of w0: ", model.getWeights()[0],
-          "\nValue of w1:", model.getWeights()[1],
-          "\nCurrent loss:", model.crossEntropyLoss(x_train_data, y_train_data), "\n")
+        return 0
