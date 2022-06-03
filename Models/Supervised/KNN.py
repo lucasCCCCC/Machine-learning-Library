@@ -2,7 +2,7 @@ import collections
 import numpy as np
 
 
-class KNearestNeighbour:
+class KNN:
 
     def __init__(self, K):
         self.K = K
