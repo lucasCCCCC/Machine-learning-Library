@@ -26,7 +26,7 @@ class Dbscan:
     def fit(self):
         neighboursQueue = queue.Queue()
 
-        self.test_data = np.append(self.test_data, np.array([[-1] * len(test_data)]).reshape(-1, 1), axis=1)
+        self.test_data = np.append(self.test_data, np.array([[-1] * len(self.test_data)]).reshape(-1, 1), axis=1)
 
         for i in range(len(self.test_data)):
 
